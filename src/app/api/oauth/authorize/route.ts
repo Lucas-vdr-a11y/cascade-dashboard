@@ -31,10 +31,10 @@ export async function GET(request: NextRequest) {
     // Redirect to login with return URL — use AUTH_URL to avoid container hostname
     const base = process.env.AUTH_URL || request.url;
     const loginUrl = new URL("/login", base);
-    // Preserve the full authorize URL as callback
-    const authorizeUrl = new URL(request.url);
-    authorizeUrl.host = new URL(base).host;
-    authorizeUrl.protocol = new URL(base).protocol;
+    // Rebuild authorize URL using AUTH_URL as base (avoids internal port)
+    const internalUrl = new URL(request.url);
+    const externalBase = new URL(base);
+    const authorizeUrl = new URL(internalUrl.pathname + internalUrl.search, externalBase);
     loginUrl.searchParams.set("callbackUrl", authorizeUrl.href);
     return NextResponse.redirect(loginUrl);
   }
