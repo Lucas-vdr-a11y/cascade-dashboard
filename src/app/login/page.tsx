@@ -1,37 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { loginAction } from "./actions";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    const formData = new FormData(e.currentTarget);
+    formData.set("callbackUrl", callbackUrl);
+
+    const result = await loginAction(formData);
 
     setLoading(false);
 
     if (result?.error) {
-      setError("Ongeldig e-mailadres of wachtwoord.");
-    } else {
-      router.push(callbackUrl);
+      setError(result.error);
     }
+    // If no error, the server action redirects — we won't reach here
   }
 
   return (
@@ -62,11 +57,10 @@ function LoginForm() {
             </label>
             <input
               id="email"
+              name="email"
               type="email"
               required
               autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-lg border border-[var(--cascade-navy)]/20 px-3 py-2 text-sm outline-none focus:border-[var(--cascade-navy)] focus:ring-2 focus:ring-[var(--cascade-navy)]/10"
               placeholder="naam@rederijcascade.nl"
             />
@@ -81,11 +75,10 @@ function LoginForm() {
             </label>
             <input
               id="password"
+              name="password"
               type="password"
               required
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-lg border border-[var(--cascade-navy)]/20 px-3 py-2 text-sm outline-none focus:border-[var(--cascade-navy)] focus:ring-2 focus:ring-[var(--cascade-navy)]/10"
               placeholder="••••••••"
             />
