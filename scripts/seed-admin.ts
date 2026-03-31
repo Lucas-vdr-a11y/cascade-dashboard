@@ -1,6 +1,8 @@
 /**
  * Maakt een initiële admin user aan.
- * Gebruik: npx tsx scripts/seed-admin.ts
+ *
+ * Interactief:  npx tsx scripts/seed-admin.ts
+ * Via env vars: ADMIN_EMAIL=x ADMIN_NAME=x ADMIN_PASSWORD=x npx tsx scripts/seed-admin.ts
  */
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
@@ -22,9 +24,14 @@ async function question(prompt: string): Promise<string> {
 }
 
 async function main() {
-  const email = await question("E-mailadres: ");
-  const name = await question("Naam: ");
-  const password = await question("Wachtwoord: ");
+  const email = process.env.ADMIN_EMAIL || await question("E-mailadres: ");
+  const name = process.env.ADMIN_NAME || await question("Naam: ");
+  const password = process.env.ADMIN_PASSWORD || await question("Wachtwoord: ");
+
+  if (!email || !password) {
+    console.error("Email en wachtwoord zijn verplicht.");
+    process.exit(1);
+  }
 
   const passwordHash = await bcrypt.hash(password, 12);
 
