@@ -28,9 +28,14 @@ export async function GET(request: NextRequest) {
   // Check if user is logged in
   const session = await auth();
   if (!session?.user?.id) {
-    // Redirect to login with return URL
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", request.url);
+    // Redirect to login with return URL — use AUTH_URL to avoid container hostname
+    const base = process.env.AUTH_URL || request.url;
+    const loginUrl = new URL("/login", base);
+    // Preserve the full authorize URL as callback
+    const authorizeUrl = new URL(request.url);
+    authorizeUrl.host = new URL(base).host;
+    authorizeUrl.protocol = new URL(base).protocol;
+    loginUrl.searchParams.set("callbackUrl", authorizeUrl.href);
     return NextResponse.redirect(loginUrl);
   }
 

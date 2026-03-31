@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export default auth((request) => {
   const { nextUrl, auth: session } = request;
 
-  // Public paths
+  // Public paths — skip auth check
   const isPublic =
     nextUrl.pathname.startsWith("/login") ||
     nextUrl.pathname.startsWith("/api/auth") ||
@@ -13,8 +13,10 @@ export default auth((request) => {
   if (isPublic) return NextResponse.next();
 
   if (!session) {
-    const loginUrl = new URL("/login", nextUrl);
-    loginUrl.searchParams.set("callbackUrl", nextUrl.href);
+    // Use AUTH_URL for the redirect base to avoid 0.0.0.0 issues behind proxy
+    const base = process.env.AUTH_URL || nextUrl.origin;
+    const loginUrl = new URL("/login", base);
+    loginUrl.searchParams.set("callbackUrl", nextUrl.pathname + nextUrl.search);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -22,5 +24,5 @@ export default auth((request) => {
 });
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/auth|api/oauth).*)"],
 };
