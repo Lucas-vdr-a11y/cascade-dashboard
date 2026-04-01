@@ -60,10 +60,15 @@ export default async function DashboardPage() {
               Dashboard
             </span>
           </div>
-          <div className="flex items-center gap-5">
-            <span className="text-sm text-white/70" style={{ fontFamily: "var(--font-body)" }}>
+          <div className="flex items-center gap-4">
+            <a href="/account" className="text-sm text-white/70 hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)" }}>
               {session.user.name ?? session.user.email}
-            </span>
+            </a>
+            {(session.user as any).role === "SUPER_ADMIN" && (
+              <a href="/admin/users" className="rounded-lg border border-white/20 px-3 py-1.5 text-xs font-medium text-white/50 transition-all hover:bg-white/10 hover:text-white">
+                Gebruikers
+              </a>
+            )}
             <form
               action={async () => {
                 "use server";
