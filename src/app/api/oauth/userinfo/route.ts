@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
-    select: { id: true, email: true, name: true, image: true, role: true },
+    select: { id: true, email: true, name: true, image: true, customRole: { select: { name: true, permissions: true } }, permissionOverrides: true },
   });
 
   if (!user) {
@@ -37,6 +37,6 @@ export async function GET(request: NextRequest) {
     email: user.email,
     name: user.name,
     picture: user.image,
-    role: user.role,
+    role: user.customRole?.name || "ADMIN",
   });
 }
