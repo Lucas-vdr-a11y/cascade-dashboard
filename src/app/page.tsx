@@ -17,7 +17,7 @@ const TOOLS = [
     color: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600",
   },
   {
-    href: "https://werkenbijcascade.nl/admin",
+    href: "https://werkenbijcascade.nl/dashboard",
     label: "Werken bij Cascade",
     description: "Vacatures, sollicitaties en de werkenbij-website",
     icon: "💼",
@@ -90,8 +90,8 @@ export default async function DashboardPage() {
             <a
               key={tool.href}
               href={tool.href}
-              target={tool.external ? "_blank" : undefined}
-              rel={tool.external ? "noopener noreferrer" : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex flex-col rounded-[24px] bg-white p-7 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
               style={{ border: "1px solid rgba(9,45,97,0.08)" }}
             >
