@@ -3,22 +3,47 @@ import { redirect } from "next/navigation";
 
 const TOOLS = [
   {
-    href: "https://cadeaukaart.varenbijcascade.com/admin",
+    href: "https://cadeaukaart.varenbijcascade.com/dashboard",
     label: "Cadeaubon Beheer",
-    description: "Cadeaubonnen, bestellingen en instellingen",
+    description: "Cadeaubonnen, arrangementen, bestellingen en instellingen",
     icon: "🎁",
+    color: "bg-amber-50 text-amber-600 group-hover:bg-amber-600",
   },
   {
     href: "https://planner.varenbijcascade.com",
-    label: "Personeelsplanner",
-    description: "Personeelsinzet per afvaart plannen",
+    label: "VaarPlanner",
+    description: "Tafelindelingen, afvaarten en keukenlijsten beheren",
     icon: "📅",
+    color: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600",
+  },
+  {
+    href: "https://werkenbijcascade.nl/admin",
+    label: "Werken bij Cascade",
+    description: "Vacatures, sollicitaties en de werkenbij-website",
+    icon: "💼",
+    color: "bg-blue-50 text-blue-600 group-hover:bg-blue-600",
+  },
+  {
+    href: "https://scan.varenbijcascade.com",
+    label: "QR Scanner",
+    description: "Scan QR-codes van reserveringen bij de ingang",
+    icon: "📷",
+    color: "bg-purple-50 text-purple-600 group-hover:bg-purple-600",
   },
   {
     href: "https://cascade.smarteventmanager.com",
-    label: "SEM (Smart Event Manager)",
-    description: "Reserveringen en evenementenbeheer",
+    label: "SEM",
+    description: "Smart Event Manager — reserveringen en boekingen",
     icon: "⚓",
+    color: "bg-cyan-50 text-cyan-600 group-hover:bg-cyan-600",
+    external: true,
+  },
+  {
+    href: "https://cadeaukaart.varenbijcascade.com",
+    label: "Cadeaubon Website",
+    description: "De publieke cadeaubonnen webshop bekijken",
+    icon: "🚢",
+    color: "bg-rose-50 text-rose-600 group-hover:bg-rose-600",
     external: true,
   },
 ];
@@ -30,20 +55,16 @@ export default async function DashboardPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[var(--cascade-cream)]">
       {/* Header */}
-      <header className="border-b border-[var(--cascade-navy)]/10 bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-4xl items-center justify-between">
+      <header style={{ backgroundColor: "var(--cascade-navy)" }} className="border-b border-white/10">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--cascade-navy)]">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white">
-                <path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.09-.34.13-.53.13s-.37-.04-.53-.13l-7.9-4.44A.991.991 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.09.34-.13.53-.13s.37.04.53.13l7.9 4.44c.32.17.53.5.53.88v9z" />
-              </svg>
-            </div>
-            <span className="font-bold text-[var(--cascade-navy)]">
+            <span className="text-2xl">⚓</span>
+            <span className="text-lg font-bold text-white">
               Cascade Dashboard
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-[var(--cascade-muted)]">
+            <span className="text-sm text-white/70">
               {session.user.name ?? session.user.email}
             </span>
             <form
@@ -54,7 +75,7 @@ export default async function DashboardPage() {
             >
               <button
                 type="submit"
-                className="text-sm text-[var(--cascade-muted)] hover:text-[var(--cascade-navy)]"
+                className="rounded-lg border border-white/20 px-3 py-1.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
               >
                 Uitloggen
               </button>
@@ -64,34 +85,42 @@ export default async function DashboardPage() {
       </header>
 
       {/* Content */}
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
-        <h1 className="mb-2 text-2xl font-bold text-[var(--cascade-navy)]">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
+        <h1 className="mb-2 text-3xl font-extrabold tracking-tight" style={{ color: "var(--cascade-navy)" }}>
           Welkom, {session.user.name?.split(" ")[0] ?? "medewerker"}
         </h1>
-        <p className="mb-8 text-[var(--cascade-muted)]">
+        <p className="mb-10 text-lg" style={{ color: "var(--cascade-muted)" }}>
           Kies een tool om mee aan de slag te gaan.
         </p>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((tool) => (
             <a
               key={tool.href}
               href={tool.href}
               target={tool.external ? "_blank" : undefined}
               rel={tool.external ? "noopener noreferrer" : undefined}
-              className="group flex flex-col rounded-xl border border-[var(--cascade-navy)]/10 bg-white p-5 shadow-sm transition-all hover:border-[var(--cascade-navy)]/30 hover:shadow-md"
+              className="group flex flex-col rounded-[24px] bg-white p-7 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+              style={{ border: "1px solid rgba(9,45,97,0.08)" }}
             >
-              <span className="mb-3 text-3xl">{tool.icon}</span>
-              <h2 className="font-semibold text-[var(--cascade-navy)] group-hover:text-[var(--cascade-blue)]">
+              <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition-colors ${tool.color}`}>
+                <span className="text-2xl group-hover:grayscale group-hover:brightness-200">{tool.icon}</span>
+              </div>
+              <h2 className="text-xl font-bold" style={{ color: "var(--cascade-navy)" }}>
                 {tool.label}
               </h2>
-              <p className="mt-1 text-sm text-[var(--cascade-muted)]">
+              <p className="mt-2 text-sm font-medium" style={{ color: "var(--cascade-muted)" }}>
                 {tool.description}
               </p>
             </a>
           ))}
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t py-4 text-center text-xs" style={{ color: "var(--cascade-muted)", borderColor: "rgba(9,45,97,0.05)" }}>
+        Rederij Cascade &copy; 2026
+      </footer>
     </div>
   );
 }
