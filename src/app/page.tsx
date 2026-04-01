@@ -3,28 +3,28 @@ import { redirect } from "next/navigation";
 
 const TOOLS = [
   {
-    href: "https://cadeaukaart.varenbijcascade.com/dashboard",
+    href: "/api/sso/token?target=cadeaubon",
     label: "Cadeaubon Beheer",
     description: "Cadeaubonnen, arrangementen, bestellingen en instellingen",
     icon: "🎁",
     color: "bg-amber-50 text-amber-600 group-hover:bg-amber-600",
   },
   {
-    href: "https://planner.varenbijcascade.com",
+    href: "/api/sso/token?target=vaarplanner",
     label: "VaarPlanner",
     description: "Tafelindelingen, afvaarten en keukenlijsten beheren",
     icon: "📅",
     color: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600",
   },
   {
-    href: "https://werkenbijcascade.nl/dashboard",
+    href: "/api/sso/token?target=werkenbij",
     label: "Werken bij Cascade",
     description: "Vacatures, sollicitaties en de werkenbij-website",
     icon: "💼",
     color: "bg-blue-50 text-blue-600 group-hover:bg-blue-600",
   },
   {
-    href: "https://scan.varenbijcascade.com",
+    href: "/api/sso/token?target=qrscan",
     label: "QR Scanner",
     description: "Scan QR-codes van reserveringen bij de ingang",
     icon: "📷",
@@ -90,8 +90,8 @@ export default async function DashboardPage() {
             <a
               key={tool.href}
               href={tool.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={tool.external ? "_blank" : undefined}
+              rel={tool.external ? "noopener noreferrer" : undefined}
               className="group flex flex-col rounded-[24px] bg-white p-7 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
               style={{ border: "1px solid rgba(9,45,97,0.08)" }}
             >
@@ -109,7 +109,6 @@ export default async function DashboardPage() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t py-4 text-center text-xs" style={{ color: "var(--cascade-muted)", borderColor: "rgba(9,45,97,0.05)" }}>
         Rederij Cascade &copy; 2026
       </footer>
