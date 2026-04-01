@@ -40,23 +40,25 @@ function LoginForm() {
       <div className="relative z-10 w-full max-w-md">
         {/* Logo */}
         <div className="flex justify-center mb-10">
-          <span className="text-5xl">⚓</span>
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: "var(--cascade-gold)" }}>
+            <span className="text-3xl text-white">⚓</span>
+          </div>
         </div>
 
         {/* Card */}
         <div className="bg-white rounded-2xl p-10 shadow-2xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold leading-tight" style={{ color: "var(--cascade-navy)" }}>
+            <h1 className="text-3xl font-bold leading-tight" style={{ fontFamily: "var(--font-heading)", color: "var(--cascade-navy)" }}>
               Cascade Dashboard
             </h1>
-            <p className="text-sm mt-2" style={{ color: "var(--cascade-muted)" }}>
-              Intern portaal — Rederij Cascade
+            <p className="text-sm mt-2" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-muted)" }}>
+              Log in om de Cascade tools te gebruiken
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--cascade-navy)" }}>
+              <label className="block text-sm font-medium mb-1.5" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-navy)" }}>
                 E-mailadres
               </label>
               <input
@@ -65,13 +67,13 @@ function LoginForm() {
                 required
                 autoComplete="email"
                 placeholder="naam@rederijcascade.nl"
-                className="w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all duration-200 focus:ring-2"
-                style={{ borderColor: "rgba(9,45,97,0.2)", color: "var(--cascade-navy)" }}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200 focus:ring-2"
+                style={{ fontFamily: "var(--font-body)", borderColor: "var(--cascade-border)", border: "1px solid var(--cascade-border)", color: "var(--cascade-navy)", backgroundColor: "var(--cascade-cream)" }}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--cascade-navy)" }}>
+              <label className="block text-sm font-medium mb-1.5" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-navy)" }}>
                 Wachtwoord
               </label>
               <input
@@ -80,31 +82,31 @@ function LoginForm() {
                 required
                 autoComplete="current-password"
                 placeholder="••••••••"
-                className="w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all duration-200 focus:ring-2"
-                style={{ borderColor: "rgba(9,45,97,0.2)", color: "var(--cascade-navy)" }}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200 focus:ring-2"
+                style={{ fontFamily: "var(--font-body)", borderColor: "var(--cascade-border)", border: "1px solid var(--cascade-border)", color: "var(--cascade-navy)", backgroundColor: "var(--cascade-cream)" }}
               />
             </div>
 
             {error && (
-              <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+              <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" style={{ fontFamily: "var(--font-body)" }}>{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 disabled:opacity-50 mt-1"
-              style={{ backgroundColor: "var(--cascade-gold)" }}
+              className="flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 disabled:opacity-50 mt-1 tracking-wide"
+              style={{ fontFamily: "var(--font-body)", backgroundColor: "var(--cascade-gold)" }}
             >
               {loading ? "Bezig..." : "Inloggen"}
             </button>
           </form>
 
-          <div className="flex items-center gap-3 mt-6">
-            <div className="flex-1 h-px" style={{ backgroundColor: "rgba(9,45,97,0.1)" }} />
-            <span className="text-[10px] uppercase tracking-widest" style={{ color: "var(--cascade-muted)" }}>
+          <div className="flex items-center gap-3 mt-7">
+            <div className="flex-1 h-px" style={{ backgroundColor: "var(--cascade-border)" }} />
+            <span className="text-[10px] uppercase tracking-widest font-medium" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-muted)" }}>
               Rederij Cascade
             </span>
-            <div className="flex-1 h-px" style={{ backgroundColor: "rgba(9,45,97,0.1)" }} />
+            <div className="flex-1 h-px" style={{ backgroundColor: "var(--cascade-border)" }} />
           </div>
         </div>
       </div>

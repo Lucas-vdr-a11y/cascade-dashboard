@@ -1,15 +1,27 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
   --cascade-navy: #092D61;
   --cascade-gold: #B49253;
+  --cascade-gold-dark: #9A7E45;
   --cascade-blue: #1D5577;
+  --cascade-blue-bg: #49648A;
   --cascade-cream: #F9F7F5;
+  --cascade-cream-dark: #EDECEA;
   --cascade-muted: #6B7FA3;
+  --cascade-green: #A6CBA6;
+  --cascade-border: #DAE0E8;
+  --font-heading: 'Baloo Thambi 2', cursive;
+  --font-body: 'Poppins', sans-serif;
 }
 
 body {
   background: var(--cascade-cream);
   color: var(--cascade-navy);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }

@@ -7,35 +7,40 @@ const TOOLS = [
     label: "Cadeaubon Beheer",
     description: "Cadeaubonnen, arrangementen, bestellingen en instellingen",
     icon: "🎁",
-    color: "bg-amber-50 text-amber-600 group-hover:bg-amber-600",
+    accent: "#8E7649",
+    accentBg: "#E8E1D6",
   },
   {
     href: "/api/sso/token?target=vaarplanner",
     label: "VaarPlanner",
     description: "Tafelindelingen, afvaarten en keukenlijsten beheren",
     icon: "📅",
-    color: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600",
+    accent: "#586C56",
+    accentBg: "#DBE4DA",
   },
   {
     href: "/api/sso/token?target=werkenbij",
     label: "Werken bij Cascade",
     description: "Vacatures, sollicitaties en de werkenbij-website",
     icon: "💼",
-    color: "bg-blue-50 text-blue-600 group-hover:bg-blue-600",
+    accent: "#1D5577",
+    accentBg: "#ABC9D4",
   },
   {
     href: "/api/sso/token?target=qrscan",
     label: "QR Scanner",
     description: "Scan QR-codes van reserveringen bij de ingang",
     icon: "📷",
-    color: "bg-purple-50 text-purple-600 group-hover:bg-purple-600",
+    accent: "#092D61",
+    accentBg: "#DAE0E8",
   },
   {
     href: "https://cascade.smarteventmanager.com",
     label: "SEM",
     description: "Smart Event Manager — reserveringen en boekingen",
     icon: "⚓",
-    color: "bg-cyan-50 text-cyan-600 group-hover:bg-cyan-600",
+    accent: "#49648A",
+    accentBg: "#DAE0E8",
     external: true,
   },
 ];
@@ -45,18 +50,25 @@ export default async function DashboardPage() {
   if (!session?.user) redirect("/login");
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--cascade-cream)]">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--cascade-cream)" }}>
       {/* Header */}
-      <header style={{ backgroundColor: "var(--cascade-navy)" }} className="border-b border-white/10">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">⚓</span>
-            <span className="text-lg font-bold text-white">
-              Cascade Dashboard
-            </span>
-          </div>
+      <header style={{ backgroundColor: "var(--cascade-navy)" }}>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
           <div className="flex items-center gap-4">
-            <span className="text-sm text-white/70">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: "var(--cascade-gold)" }}>
+              <span className="text-xl text-white">⚓</span>
+            </div>
+            <div>
+              <span className="text-lg font-bold text-white" style={{ fontFamily: "var(--font-heading)" }}>
+                Cascade Dashboard
+              </span>
+              <span className="ml-2 rounded-md px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/50" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
+                Intern
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-5">
+            <span className="text-sm text-white/70" style={{ fontFamily: "var(--font-body)" }}>
               {session.user.name ?? session.user.email}
             </span>
             <form
@@ -67,7 +79,7 @@ export default async function DashboardPage() {
             >
               <button
                 type="submit"
-                className="rounded-lg border border-white/20 px-3 py-1.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white/70 transition-all hover:bg-white/10 hover:text-white"
               >
                 Uitloggen
               </button>
@@ -76,14 +88,23 @@ export default async function DashboardPage() {
         </div>
       </header>
 
+      {/* Subtle wave divider */}
+      <div style={{ backgroundColor: "var(--cascade-navy)" }}>
+        <svg viewBox="0 0 1440 60" fill="none" className="w-full block">
+          <path d="M0 30C360 60 720 0 1080 30C1260 45 1380 20 1440 30V60H0V30Z" fill="var(--cascade-cream)" />
+        </svg>
+      </div>
+
       {/* Content */}
-      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
-        <h1 className="mb-2 text-3xl font-extrabold tracking-tight" style={{ color: "var(--cascade-navy)" }}>
-          Welkom, {session.user.name?.split(" ")[0] ?? "medewerker"}
-        </h1>
-        <p className="mb-10 text-lg" style={{ color: "var(--cascade-muted)" }}>
-          Kies een tool om mee aan de slag te gaan.
-        </p>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-8 py-8">
+        <div className="mb-10">
+          <h1 className="mb-1 text-4xl font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)", color: "var(--cascade-navy)" }}>
+            Welkom, {session.user.name?.split(" ")[0] ?? "medewerker"}
+          </h1>
+          <p className="text-base" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-muted)" }}>
+            Kies een tool om mee aan de slag te gaan.
+          </p>
+        </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((tool) => (
@@ -92,25 +113,43 @@ export default async function DashboardPage() {
               href={tool.href}
               target={tool.external ? "_blank" : undefined}
               rel={tool.external ? "noopener noreferrer" : undefined}
-              className="group flex flex-col rounded-[24px] bg-white p-7 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
-              style={{ border: "1px solid rgba(9,45,97,0.08)" }}
+              className="group flex flex-col rounded-2xl bg-white p-7 shadow-sm transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+              style={{ border: "1px solid var(--cascade-border)" }}
             >
-              <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition-colors ${tool.color}`}>
-                <span className="text-2xl group-hover:grayscale group-hover:brightness-200">{tool.icon}</span>
+              <div
+                className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition-colors duration-200"
+                style={{ backgroundColor: tool.accentBg }}
+              >
+                <span className="text-2xl">{tool.icon}</span>
               </div>
-              <h2 className="text-xl font-bold" style={{ color: "var(--cascade-navy)" }}>
+              <h2
+                className="text-xl font-bold transition-colors duration-200"
+                style={{ fontFamily: "var(--font-heading)", color: "var(--cascade-navy)" }}
+              >
                 {tool.label}
               </h2>
-              <p className="mt-2 text-sm font-medium" style={{ color: "var(--cascade-muted)" }}>
+              <p
+                className="mt-2 text-sm leading-relaxed"
+                style={{ fontFamily: "var(--font-body)", color: "var(--cascade-muted)" }}
+              >
                 {tool.description}
               </p>
+              <div className="mt-auto pt-5">
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white transition-all duration-200 group-hover:shadow-md"
+                  style={{ backgroundColor: tool.accent }}
+                >
+                  Openen →
+                </span>
+              </div>
             </a>
           ))}
         </div>
       </main>
 
-      <footer className="border-t py-4 text-center text-xs" style={{ color: "var(--cascade-muted)", borderColor: "rgba(9,45,97,0.05)" }}>
-        Rederij Cascade &copy; 2026
+      {/* Footer */}
+      <footer className="py-5 text-center text-xs" style={{ fontFamily: "var(--font-body)", color: "var(--cascade-muted)", borderTop: "1px solid var(--cascade-border)" }}>
+        Rederij Cascade &copy; 2026 — De vloot vol verrassingen
       </footer>
     </div>
   );
