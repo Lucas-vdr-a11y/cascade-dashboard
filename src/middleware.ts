@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 export default auth((request) => {
   const { nextUrl, auth: session } = request;
 
-  // Public paths — skip auth check
   const isPublic =
     nextUrl.pathname.startsWith("/login") ||
+    nextUrl.pathname.startsWith("/invite") ||
     nextUrl.pathname.startsWith("/api/auth") ||
     nextUrl.pathname.startsWith("/api/oauth");
 
@@ -19,15 +19,7 @@ export default auth((request) => {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Admin routes require SUPER_ADMIN
-  if (nextUrl.pathname.startsWith("/admin")) {
-    const role = (session.user as any)?.role;
-    if (role !== "SUPER_ADMIN") {
-      const base = process.env.AUTH_URL || nextUrl.origin;
-      return NextResponse.redirect(new URL("/", base));
-    }
-  }
-
+  // Admin routes are protected by API-level permission checks
   return NextResponse.next();
 });
 
