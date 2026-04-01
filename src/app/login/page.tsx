@@ -40,9 +40,7 @@ function LoginForm() {
       <div className="relative z-10 w-full max-w-md">
         {/* Logo */}
         <div className="flex justify-center mb-10">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: "var(--cascade-gold)" }}>
-            <span className="text-3xl text-white">⚓</span>
-          </div>
+          <img src="/images/cascade-logo-white.svg" alt="Rederij Cascade" className="h-16 w-auto" />
         </div>
 
         {/* Card */}

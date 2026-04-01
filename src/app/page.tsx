@@ -55,17 +55,10 @@ export default async function DashboardPage() {
       <header style={{ backgroundColor: "var(--cascade-navy)" }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
           <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: "var(--cascade-gold)" }}>
-              <span className="text-xl text-white">⚓</span>
-            </div>
-            <div>
-              <span className="text-lg font-bold text-white" style={{ fontFamily: "var(--font-heading)" }}>
-                Cascade Dashboard
-              </span>
-              <span className="ml-2 rounded-md px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/50" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
-                Intern
-              </span>
-            </div>
+            <img src="/images/cascade-logo-white.svg" alt="Rederij Cascade" className="h-9 w-auto" />
+            <span className="rounded-md px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/50" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
+              Dashboard
+            </span>
           </div>
           <div className="flex items-center gap-5">
             <span className="text-sm text-white/70" style={{ fontFamily: "var(--font-body)" }}>
