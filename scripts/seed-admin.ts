@@ -44,7 +44,7 @@ async function main() {
     });
   } else {
     await prisma.user.create({
-      data: { email, name, passwordHash, role: "SUPER_ADMIN" },
+      data: { email, name, passwordHash, passwordSet: true },
     });
     console.log(`Admin ${email} aangemaakt.`);
   }
