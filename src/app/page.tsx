@@ -38,14 +38,6 @@ const TOOLS = [
     color: "bg-cyan-50 text-cyan-600 group-hover:bg-cyan-600",
     external: true,
   },
-  {
-    href: "https://cadeaukaart.varenbijcascade.com",
-    label: "Cadeaubon Website",
-    description: "De publieke cadeaubonnen webshop bekijken",
-    icon: "🚢",
-    color: "bg-rose-50 text-rose-600 group-hover:bg-rose-600",
-    external: true,
-  },
 ];
 
 export default async function DashboardPage() {
